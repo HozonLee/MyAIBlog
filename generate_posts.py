@@ -92,6 +92,10 @@ def generate_html_post(frontmatter, body_html, filename, posts_json):
             <a href="../weekly/index.html">潮流周刊</a>
             <a href="../about/index.html">关于</a>
             <a href="../tags/index.html">标签</a>
+            <div class="search-container">
+                <input type="text" id="search-box" class="search-box" placeholder="搜索..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
         </nav>
     </header>
     <main>
@@ -221,6 +225,10 @@ def generate_tag_pages(posts):
             <a href="../weekly/index.html">潮流周刊</a>
             <a href="../about/index.html">关于</a>
             <a href="index.html">标签</a>
+            <div class="search-container">
+                <input type="text" id="search-box" class="search-box" placeholder="搜索..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
         </nav>
     </header>
     <main>
@@ -285,6 +293,10 @@ def generate_tag_pages(posts):
             <a href="../weekly/index.html">潮流周刊</a>
             <a href="../about/index.html">关于</a>
             <a href="index.html">标签</a>
+            <div class="search-container">
+                <input type="text" id="search-box" class="search-box" placeholder="搜索..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
         </nav>
     </header>
     <main>

@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>潮流周刊 - 我的博客</title>
+    <title>潮流周刊 - 佑值的技术博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="佑值的技术博客 RSS" href="../feed.xml">
     <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');</script>
 </head>
 <body>
     <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
     
     <header>
-        <h1><a href="../index.html">我的博客</a></h1>
+        <h1><a href="../index.html">佑值的技术博客</a></h1>
         <p class="tagline">Be yourself and don't go with the flow.</p>
         <nav>
             <a href="../index.html">首页</a>
             <a href="../weekly/index.html">潮流周刊</a>
             <a href="../about/index.html">关于</a>
             <a href="../tags/index.html">标签</a>
+            <div class="search-container">
+                <input type="text" id="search-box" class="search-box" placeholder="搜索..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
         </nav>
     </header>
     <main>
@@ -43,7 +47,7 @@
             <a href="mailto:your.email@example.com">Email</a>
             <a href="../feed.xml" class="rss-link" title="RSS 订阅">📡 RSS</a>
         </div>
-        <p>&copy; 2026 我的博客</p>
+        <p>&copy; 2026 佑值的技术博客</p>
     </footer>
     
     <script src="../assets/js/main.js"></script>
