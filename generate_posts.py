@@ -76,16 +76,16 @@ def generate_html_post(frontmatter, body_html, filename, posts_json):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title} - 我的博客</title>
+    <title>{title} - 佑值的技术博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="佑值的技术博客 RSS" href="../feed.xml">
     <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');</script>
 </head>
 <body>
     <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
     
     <header>
-        <h1><a href="../index.html">我的博客</a></h1>
+        <h1><a href="../index.html">佑值的技术博客</a></h1>
         <p class="tagline">Be yourself and don't go with the flow.</p>
         <nav>
             <a href="../index.html">首页</a>
@@ -126,7 +126,7 @@ def generate_html_post(frontmatter, body_html, filename, posts_json):
             <a href="mailto:your.email@example.com">Email</a>
             <a href="../feed.xml" class="rss-link" title="RSS 订阅">📡 RSS</a>
         </div>
-        <p>&copy; 2026 我的博客</p>
+        <p>&copy; 2026 佑值的技术博客</p>
     </footer>
     
     <script id="posts-data" type="application/json">{posts_json}</script>
@@ -160,7 +160,7 @@ def generate_rss_feed(posts):
     rss_template = f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>我的博客</title>
+    <title>佑值的技术博客</title>
     <link>{site_url}</link>
     <description>分享留学、语言、AI、工作、海外生活的个人博客</description>
     <language>zh-CN</language>
@@ -205,16 +205,16 @@ def generate_tag_pages(posts):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>标签：{tag} - 我的博客</title>
+    <title>标签：{tag} - 佑值的技术博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="佑值的技术博客 RSS" href="../feed.xml">
     <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');</script>
 </head>
 <body>
     <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
     
     <header>
-        <h1><a href="../index.html">我的博客</a></h1>
+        <h1><a href="../index.html">佑值的技术博客</a></h1>
         <p class="tagline">Be yourself and don't go with the flow.</p>
         <nav>
             <a href="../index.html">首页</a>
@@ -239,7 +239,7 @@ def generate_tag_pages(posts):
             <a href="mailto:your.email@example.com">Email</a>
             <a href="../feed.xml" class="rss-link" title="RSS 订阅">📡 RSS</a>
         </div>
-        <p>&copy; 2026 我的博客</p>
+        <p>&copy; 2026 佑值的技术博客</p>
     </footer>
     
     <script src="../assets/js/main.js"></script>
@@ -269,16 +269,16 @@ def generate_tag_pages(posts):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>标签 - 我的博客</title>
+    <title>标签 - 佑值的技术博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="佑值的技术博客 RSS" href="../feed.xml">
     <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');</script>
 </head>
 <body>
     <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
     
     <header>
-        <h1><a href="../index.html">我的博客</a></h1>
+        <h1><a href="../index.html">佑值的技术博客</a></h1>
         <p class="tagline">Be yourself and don't go with the flow.</p>
         <nav>
             <a href="../index.html">首页</a>
@@ -303,7 +303,7 @@ def generate_tag_pages(posts):
             <a href="mailto:your.email@example.com">Email</a>
             <a href="../feed.xml" class="rss-link" title="RSS 订阅">📡 RSS</a>
         </div>
-        <p>&copy; 2026 我的博客</p>
+        <p>&copy; 2026 佑值的技术博客</p>
     </footer>
     
     <script src="../assets/js/main.js"></script>
@@ -334,16 +334,16 @@ def update_index_html(posts, posts_json):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的博客</title>
+    <title>佑值的技术博客</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="佑值的技术博客 RSS" href="feed.xml">
     <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');</script>
 </head>
 <body>
     <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
     
     <header>
-        <h1><a href="index.html">我的博客</a></h1>
+        <h1><a href="index.html">佑值的技术博客</a></h1>
         <p class="tagline">Be yourself and don't go with the flow.</p>
         <nav>
             <a href="index.html">首页</a>
@@ -373,7 +373,7 @@ def update_index_html(posts, posts_json):
             <a href="mailto:your.email@example.com">Email</a>
             <a href="feed.xml" class="rss-link" title="RSS 订阅">📡 RSS</a>
         </div>
-        <p>&copy; 2026 我的博客</p>
+        <p>&copy; 2026 佑值的技术博客</p>
     </footer>
     
     <button id="back-to-top" class="theme-toggle" style="bottom: 20px; top: auto; display: none;" title="返回顶部">↑</button>
