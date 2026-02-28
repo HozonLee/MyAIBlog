@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw模型切换工具：轻松切换不同大模型 - 我的博客</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="../index.html">我的博客</a></h1>
+        <p class="tagline">Be yourself and don't go with the flow.</p>
+        <nav>
+            <a href="../index.html">首页</a>
+            <a href="../weekly/index.html">潮流周刊</a>
+            <a href="../about/index.html">关于</a>
+        </nav>
+    </header>
+    <main>
+        <section class="post">
+            <a href="../index.html" class="back-link">← 返回首页</a>
+            <div class="post-meta">
+                <p>【2026-02-28】</p>
+                <div class="tags"><span class="tag">OpenClaw</span><span class="tag">大模型</span><span class="tag">工具</span><span class="tag">配置</span></div>
+            </div>
+            <div class="post-content">
+                <h1>OpenClaw模型切换工具：轻松切换不同大模型</h1>
+
+<h2>背景</h2>
+
+<p>OpenClaw是一个强大的本地AI助手网关，支持多种大模型。然而，切换不同的大模型通常需要手动编辑配置文件，这对于不熟悉配置的用户来说可能有些复杂。</p>
+
+<p>本文将介绍一个简单的Python工具，帮助你轻松切换OpenClaw使用的大模型，无需手动编辑配置文件。</p>
+
+<h2>工具功能</h2>
+
+<p><ul><li>查看当前使用的模型</li></p>
+<li>列出所有可用的模型</li>
+<li>切换到指定的模型</li>
+<li>重启OpenClaw以应用更改</li>
+<li>显示模型切换状态</li>
+<p></ul></p>
+<h2>实现代码</h2>
+
+<p><code>`</code>python</p>
+<p>#!/usr/bin/env python3</p>
+<p>"""</p>
+<p>OpenClaw模型切换工具</p>
+
+<p>功能：</p>
+<p><ul><li>查看当前使用的模型</li></p>
+<li>列出所有可用的模型</li>
+<li>切换到指定的模型</li>
+<li>重启OpenClaw以应用更改</li>
+<li>显示模型切换状态</li>
+<p></ul>"""</p>
+
+<p>import json</p>
+<p>import os</p>
+<p>import subprocess</p>
+<p>import sys</p>
+<p>import argparse</p>
+
+<p>def get_openclaw_config():</p>
+<p>    """获取OpenClaw配置"""</p>
+<p>    config_path = os.path.expanduser('~/.openclaw/openclaw.json')</p>
+<p>    if not os.path.exists(config_path):</p>
+<p>        print(f"错误：找不到OpenClaw配置文件 {config_path}")</p>
+<p>        sys.exit(1)</p>
+<p>    </p>
+<p>    with open(config_path, 'r', encoding='utf-8') as f:</p>
+<p>        return json.load(f)</p>
+
+<p>def save_openclaw_config(config):</p>
+<p>    """保存OpenClaw配置"""</p>
+<p>    config_path = os.path.expanduser('~/.openclaw/openclaw.json')</p>
+<p>    with open(config_path, 'w', encoding='utf-8') as f:</p>
+<p>        json.dump(config, f, indent=2, ensure_ascii=False)</p>
+
+<p>def get_current_model(config):</p>
+<p>    """获取当前使用的模型"""</p>
+<p>    if 'model' in config and 'provider' in config['model']:</p>
+<p>        provider = config['model']['provider']</p>
+<p>        model = config['model'].get('model', 'default')</p>
+<p>        return f"{provider}:{model}"</p>
+<p>    return "未知模型"</p>
+
+<p>def list_available_models():</p>
+<p>    """列出所有可用的模型"""</p>
+<p>    models = [</p>
+<p>        {"name": "deepseek", "provider": "deepseek", "model": "deepseek-chat"},</p>
+<p>        {"name": "qwen", "provider": "qwen", "model": "qwen-turbo"},</p>
+<p>        {"name": "minimax", "provider": "minimax", "model": "abab5.5-chat"},</p>
+<p>        {"name": "openai", "provider": "openai", "model": "gpt-4o"},</p>
+<p>        {"name": "anthropic", "provider": "anthropic", "model": "claude-3-opus-20240229"},</p>
+<p>        {"name": "google", "provider": "google", "model": "gemini-1.5-flash"}</p>
+<p>    ]</p>
+<p>    return models</p>
+
+<p>def switch_model(config, model_name):</p>
+<p>    """切换模型"""</p>
+<p>    available_models = list_available_models()</p>
+<p>    target_model = None</p>
+<p>    </p>
+<p>    for model in available_models:</p>
+<p>        if model['name'] == model_name:</p>
+<p>            target_model = model</p>
+<p>            break</p>
+<p>    </p>
+<p>    if not target_model:</p>
+<p>        print(f"错误：找不到模型 {model_name}")</p>
+<p>        return False</p>
+<p>    </p>
+<p>    <h1>更新配置</h1></p>
+<p>    if 'model' not in config:</p>
+<p>        config['model'] = {}</p>
+<p>    </p>
+<p>    config['model']['provider'] = target_model['provider']</p>
+<p>    config['model']['model'] = target_model['model']</p>
+<p>    </p>
+<p>    <h1>保存配置</h1></p>
+<p>    save_openclaw_config(config)</p>
+<p>    print(f"已切换到模型：{target_model['name']} ({target_model['provider']}:{target_model['model']})")</p>
+<p>    return True</p>
+
+<p>def restart_openclaw():</p>
+<p>    """重启OpenClaw"""</p>
+<p>    print("正在重启OpenClaw...")</p>
+<p>    try:</p>
+<p>        result = subprocess.run(['openclaw', 'restart'], capture_output=True, text=True)</p>
+<p>        if result.returncode == 0:</p>
+<p>            print("OpenClaw重启成功！")</p>
+<p>            return True</p>
+<p>        else:</p>
+<p>            print(f"OpenClaw重启失败：{result.stderr}")</p>
+<p>            return False</p>
+<p>    except Exception as e:</p>
+<p>        print(f"执行命令失败：{e}")</p>
+<p>        return False</p>
+
+<p>def main():</p>
+<p>    parser = argparse.ArgumentParser(description='OpenClaw模型切换工具')</p>
+<p>    parser.add_argument('action', choices=['status', 'list', 'switch', 'restart'],</p>
+<p>                        help='操作：status(查看状态), list(列出模型), switch(切换模型), restart(重启)')</p>
+<p>    parser.add_argument('model', nargs='?', help='要切换的模型名称')</p>
+<p>    </p>
+<p>    args = parser.parse_args()</p>
+<p>    </p>
+<p>    config = get_openclaw_config()</p>
+<p>    </p>
+<p>    if args.action == 'status':</p>
+<p>        current_model = get_current_model(config)</p>
+<p>        print(f"当前模型：{current_model}")</p>
+<p>    </p>
+<p>    elif args.action == 'list':</p>
+<p>        print("可用模型列表：")</p>
+<p>        models = list_available_models()</p>
+<p>        for model in models:</p>
+<p>            print(f"  - {model['name']}: {model['provider']}:{model['model']}")</p>
+<p>    </p>
+<p>    elif args.action == 'switch':</p>
+<p>        if not args.model:</p>
+<p>            print("错误：请指定要切换的模型名称")</p>
+<p>            print("使用 'openclaw-model list' 查看可用模型")</p>
+<p>            sys.exit(1)</p>
+<p>        </p>
+<p>        if switch_model(config, args.model):</p>
+<p>            print("提示：切换模型后需要重启OpenClaw才能生效")</p>
+<p>            print("执行 'openclaw-model restart' 重启OpenClaw")</p>
+<p>    </p>
+<p>    elif args.action == 'restart':</p>
+<p>        restart_openclaw()</p>
+
+<p>if __name__ == '__main__':</p>
+<p>    main()</p>
+<p><code>`</code></p>
+
+<h2>使用方法</h2>
+
+<h3>1. 保存工具脚本</h3>
+
+<p>将上面的代码保存为 <code>openclaw-model.py</code>，并添加执行权限：</p>
+
+<p><code>`</code>bash</p>
+<p>chmod +x openclaw-model.py</p>
+<p><code>`</code></p>
+
+<h3>2. 移动到系统路径</h3>
+
+<p>将脚本移动到系统路径，方便全局使用：</p>
+
+<p><code>`</code>bash</p>
+<p>sudo mv openclaw-model.py /usr/local/bin/openclaw-model</p>
+<p><code>`</code></p>
+
+<h3>3. 查看当前模型</h3>
+
+<p><code>`</code>bash</p>
+<p>openclaw-model status</p>
+<p><code>`</code></p>
+
+<h3>4. 列出可用模型</h3>
+
+<p><code>`</code>bash</p>
+<p>openclaw-model list</p>
+<p><code>`</code></p>
+
+<h3>5. 切换模型</h3>
+
+<p><code>`</code>bash</p>
+<h1>切换到DeepSeek模型</h1>
+<p>openclaw-model switch deepseek</p>
+
+<h1>切换到Qwen模型</h1>
+<p>openclaw-model switch qwen</p>
+
+<h1>切换到OpenAI模型</h1>
+<p>openclaw-model switch openai</p>
+<p><code>`</code></p>
+
+<h3>6. 重启OpenClaw</h3>
+
+<p><code>`</code>bash</p>
+<p>openclaw-model restart</p>
+<p><code>`</code></p>
+
+<h2>支持的模型</h2>
+
+<p>| 模型名称 | 提供商 | 模型ID |</p>
+<p>|---------|--------|--------|</p>
+<p>| deepseek | deepseek | deepseek-chat |</p>
+<p>| qwen | qwen | qwen-turbo |</p>
+<p>| minimax | minimax | abab5.5-chat |</p>
+<p>| openai | openai | gpt-4o |</p>
+<p>| anthropic | anthropic | claude-3-opus-20240229 |</p>
+<p>| google | google | gemini-1.5-flash |</p>
+
+<h2>注意事项</h2>
+
+<li>确保OpenClaw已经安装并配置</li>
+<li>切换模型后需要重启OpenClaw才能生效</li>
+<li>部分模型可能需要API密钥，请确保在OpenClaw配置中正确设置</li>
+<li>对于需要OAuth授权的模型（如Qwen），请使用 <code>openclaw configure</code> 命令进行授权</li>
+
+<h2>扩展功能</h2>
+
+<p>你可以根据需要扩展这个工具：</p>
+
+<li>添加自定义模型配置</li>
+<li>支持模型参数调整</li>
+<li>实现模型性能测试</li>
+<li>添加模型对比功能</li>
+
+<h2>总结</h2>
+
+<p>这个OpenClaw模型切换工具让你可以轻松管理和切换不同的大模型，无需手动编辑配置文件。通过简单的命令，你可以快速切换到最适合当前任务的模型，提高AI助手的使用效率。</p>
+
+<p>希望这个工具能帮助你更好地使用OpenClaw，享受AI助手带来的便利！</p>
+            </div>
+        </section>
+        
+
+    </main>
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/HozonLee">GitHub</a>
+            <a href="https://twitter.com/yourusername">Twitter</a>
+            <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
+            <a href="mailto:your.email@example.com">Email</a>
+        </div>
+        <p>&copy; 2026 我的博客</p>
+    </footer>
+</body>
+</html>
