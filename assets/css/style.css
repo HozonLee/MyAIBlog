@@ -465,136 +465,136 @@ footer p {
 }
 
 /* 深色模式样式 */
-body.dark-mode {
+html.dark-mode {
     background-color: #1a1a1a;
     color: #e0e0e0;
 }
 
-body.dark-mode header h1 a {
+html.dark-mode header h1 a {
     color: #e0e0e0;
 }
 
-body.dark-mode nav a {
+html.dark-mode nav a {
     color: #999;
 }
 
-body.dark-mode nav a:hover {
+html.dark-mode nav a:hover {
     color: #e0e0e0;
 }
 
-body.dark-mode .posts li {
+html.dark-mode .posts li {
     border-bottom-color: #333;
 }
 
-body.dark-mode .posts h3 {
+html.dark-mode .posts h3 {
     color: #e0e0e0;
 }
 
-body.dark-mode .posts p {
+html.dark-mode .posts p {
     color: #999;
 }
 
-body.dark-mode .post-content {
+html.dark-mode .post-content {
     color: #e0e0e0;
 }
 
-body.dark-mode .post-content h1,
-body.dark-mode .post-content h2,
-body.dark-mode .post-content h3 {
+html.dark-mode .post-content h1,
+html.dark-mode .post-content h2,
+html.dark-mode .post-content h3 {
     color: #e0e0e0;
 }
 
-body.dark-mode .post-content a {
+html.dark-mode .post-content a {
     color: #66b3ff;
 }
 
-body.dark-mode .post-content a:hover {
+html.dark-mode .post-content a:hover {
     border-bottom-color: #66b3ff;
 }
 
-body.dark-mode .post-content pre {
+html.dark-mode .post-content pre {
     background-color: #2d2d2d;
 }
 
-body.dark-mode .post-content code {
+html.dark-mode .post-content code {
     background-color: #2d2d2d;
 }
 
-body.dark-mode .post-content blockquote {
+html.dark-mode .post-content blockquote {
     border-left-color: #444;
     color: #999;
 }
 
-body.dark-mode .tag {
+html.dark-mode .tag {
     background-color: #333;
     color: #999;
 }
 
-body.dark-mode .tag:hover {
+html.dark-mode .tag:hover {
     background-color: #444;
     color: #e0e0e0;
 }
 
-body.dark-mode footer {
+html.dark-mode footer {
     border-top-color: #333;
 }
 
-body.dark-mode .social-links a {
+html.dark-mode .social-links a {
     color: #999;
 }
 
-body.dark-mode .social-links a:hover {
+html.dark-mode .social-links a:hover {
     color: #e0e0e0;
 }
 
-body.dark-mode .search-box {
+html.dark-mode .search-box {
     background-color: #2d2d2d;
     border-color: #444;
     color: #e0e0e0;
 }
 
-body.dark-mode .search-box:focus {
+html.dark-mode .search-box:focus {
     border-color: #666;
 }
 
-body.dark-mode .search-result-item {
+html.dark-mode .search-result-item {
     border-bottom-color: #333;
 }
 
-body.dark-mode .search-result-item h4 {
+html.dark-mode .search-result-item h4 {
     color: #e0e0e0;
 }
 
-body.dark-mode .theme-toggle {
+html.dark-mode .theme-toggle {
     border-color: #444;
     color: #e0e0e0;
 }
 
-body.dark-mode .theme-toggle:hover {
+html.dark-mode .theme-toggle:hover {
     background-color: #333;
 }
 
-body.dark-mode .comments {
+html.dark-mode .comments {
     border-top-color: #333;
 }
 
-body.dark-mode .comments h3 {
+html.dark-mode .comments h3 {
     color: #e0e0e0;
 }
 
-body.dark-mode .about h2 {
+html.dark-mode .about h2 {
     color: #e0e0e0;
 }
 
-body.dark-mode .about p {
+html.dark-mode .about p {
     color: #999;
 }
 
-body.dark-mode .back-link {
+html.dark-mode .back-link {
     color: #999;
 }
 
-body.dark-mode .back-link:hover {
+html.dark-mode .back-link:hover {
     color: #e0e0e0;
 }
 

@@ -79,6 +79,7 @@ def generate_html_post(frontmatter, body_html, filename, posts_json):
     <title>{title} - 我的博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
+    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');</script>
 </head>
 <body>
     <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
@@ -203,6 +204,7 @@ def generate_tag_pages(posts):
     <title>标签：{tag} - 我的博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
+    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');</script>
 </head>
 <body>
     <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
@@ -264,6 +266,7 @@ def generate_tag_pages(posts):
     <title>标签 - 我的博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
+    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');</script>
 </head>
 <body>
     <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
@@ -326,6 +329,7 @@ def update_index_html(posts, posts_json):
     <title>我的博客</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="feed.xml">
+    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode');</script>
 </head>
 <body>
     <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
