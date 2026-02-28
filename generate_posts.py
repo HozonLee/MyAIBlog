@@ -2,6 +2,7 @@
 import os
 import re
 from datetime import datetime
+from xml.sax.saxutils import escape
 
 def parse_frontmatter(content):
     frontmatter = {}
@@ -52,19 +53,21 @@ def markdown_to_html(markdown_text):
     
     return html
 
-def generate_html_post(frontmatter, body_html, filename):
+def generate_html_post(frontmatter, body_html, filename, posts_json):
     title = frontmatter.get('title', '未命名文章')
     date = frontmatter.get('date', datetime.now().strftime('%Y-%m-%d'))
     tags = frontmatter.get('tags', '')
     
     # 处理标签
     tags_html = ''
+    tags_list = []
     if tags:
         tag_list = tags.strip('[]').split(',')
         tags_html = '<div class="tags">'
         for tag in tag_list:
             tag = tag.strip()
             if tag:
+                tags_list.append(tag)
                 tags_html += f'<span class="tag">{tag}</span>'
         tags_html += '</div>'
     
@@ -75,8 +78,11 @@ def generate_html_post(frontmatter, body_html, filename):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - 我的博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
 </head>
 <body>
+    <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
+    
     <header>
         <h1><a href="../index.html">我的博客</a></h1>
         <p class="tagline">Be yourself and don't go with the flow.</p>
@@ -84,6 +90,7 @@ def generate_html_post(frontmatter, body_html, filename):
             <a href="../index.html">首页</a>
             <a href="../weekly/index.html">潮流周刊</a>
             <a href="../about/index.html">关于</a>
+            <a href="../tags/index.html">标签</a>
         </nav>
     </header>
     <main>
@@ -116,13 +123,50 @@ def generate_html_post(frontmatter, body_html, filename):
             <a href="https://twitter.com/yourusername">Twitter</a>
             <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
             <a href="mailto:your.email@example.com">Email</a>
+            <a href="../feed.xml" class="rss-link" title="RSS 订阅">📡 RSS</a>
         </div>
         <p>&copy; 2026 我的博客</p>
     </footer>
+    
+    <script id="posts-data" type="application/json">{posts_json}</script>
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>'''
     
     return html_template
+
+def generate_rss_feed(posts):
+    """生成 RSS feed"""
+    site_url = "https://hozonlee.github.io/MyAIBlog"
+    current_time = datetime.now().strftime('%a, %d %b %Y %H:%M:%S +0000')
+    
+    rss_items = ""
+    for post in sorted(posts, key=lambda x: x['date'], reverse=True)[:20]:  # 最近20篇
+        pub_date = datetime.strptime(post['date'], '%Y-%m-%d').strftime('%a, %d %b %Y 00:00:00 +0000')
+        rss_items += f"""
+    <item>
+      <title>{escape(post['title'])}</title>
+      <link>{site_url}/{post['url']}</link>
+      <guid>{site_url}/{post['url']}</guid>
+      <pubDate>{pub_date}</pubDate>
+      <description>{escape(post['excerpt'])}</description>
+    </item>"""
+    
+    rss_template = f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>我的博客</title>
+    <link>{site_url}</link>
+    <description>分享留学、语言、AI、工作、海外生活的个人博客</description>
+    <language>zh-CN</language>
+    <lastBuildDate>{current_time}</lastBuildDate>
+    <atom:link href="{site_url}/feed.xml" rel="self" type="application/rss+xml" />{rss_items}
+  </channel>
+</rss>"""
+    
+    with open('feed.xml', 'w', encoding='utf-8') as f:
+        f.write(rss_template)
+    print("已生成：feed.xml")
 
 def generate_tag_pages(posts):
     tags_dir = 'tags'
@@ -158,8 +202,11 @@ def generate_tag_pages(posts):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>标签：{tag} - 我的博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
 </head>
 <body>
+    <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
+    
     <header>
         <h1><a href="../index.html">我的博客</a></h1>
         <p class="tagline">Be yourself and don't go with the flow.</p>
@@ -167,7 +214,7 @@ def generate_tag_pages(posts):
             <a href="../index.html">首页</a>
             <a href="../weekly/index.html">潮流周刊</a>
             <a href="../about/index.html">关于</a>
-            <a href="../tags/index.html">标签</a>
+            <a href="index.html">标签</a>
         </nav>
     </header>
     <main>
@@ -184,9 +231,12 @@ def generate_tag_pages(posts):
             <a href="https://twitter.com/yourusername">Twitter</a>
             <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
             <a href="mailto:your.email@example.com">Email</a>
+            <a href="../feed.xml" class="rss-link" title="RSS 订阅">📡 RSS</a>
         </div>
         <p>&copy; 2026 我的博客</p>
     </footer>
+    
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>'''
         
@@ -213,8 +263,11 @@ def generate_tag_pages(posts):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>标签 - 我的博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="../feed.xml">
 </head>
 <body>
+    <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
+    
     <header>
         <h1><a href="../index.html">我的博客</a></h1>
         <p class="tagline">Be yourself and don't go with the flow.</p>
@@ -239,9 +292,12 @@ def generate_tag_pages(posts):
             <a href="https://twitter.com/yourusername">Twitter</a>
             <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
             <a href="mailto:your.email@example.com">Email</a>
+            <a href="../feed.xml" class="rss-link" title="RSS 订阅">📡 RSS</a>
         </div>
         <p>&copy; 2026 我的博客</p>
     </footer>
+    
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>'''
     
@@ -250,7 +306,7 @@ def generate_tag_pages(posts):
         f.write(tags_index_template)
     print(f"已生成：{tags_index_file}")
 
-def update_index_html(posts):
+def update_index_html(posts, posts_json):
     posts_html = ''
     for post in sorted(posts, key=lambda x: x['date'], reverse=True):
         posts_html += f'''                <li>
@@ -269,8 +325,11 @@ def update_index_html(posts):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的博客</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="我的博客 RSS" href="feed.xml">
 </head>
 <body>
+    <button id="theme-toggle" class="theme-toggle" title="切换主题">🌙</button>
+    
     <header>
         <h1><a href="index.html">我的博客</a></h1>
         <p class="tagline">Be yourself and don't go with the flow.</p>
@@ -282,6 +341,12 @@ def update_index_html(posts):
         </nav>
     </header>
     <main>
+        <!-- 搜索框 -->
+        <section class="search-container">
+            <input type="text" id="search-box" class="search-box" placeholder="搜索文章..." autocomplete="off">
+            <div id="search-results" class="search-results"></div>
+        </section>
+        
         <section class="posts">
             <ul>
 {posts_html}
@@ -294,9 +359,15 @@ def update_index_html(posts):
             <a href="https://twitter.com/yourusername">Twitter</a>
             <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
             <a href="mailto:your.email@example.com">Email</a>
+            <a href="feed.xml" class="rss-link" title="RSS 订阅">📡 RSS</a>
         </div>
         <p>&copy; 2026 我的博客</p>
     </footer>
+    
+    <button id="back-to-top" class="theme-toggle" style="bottom: 20px; top: auto; display: none;" title="返回顶部">↑</button>
+    
+    <script id="posts-data" type="application/json">{posts_json}</script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>'''
     
@@ -329,11 +400,6 @@ def main():
             html_filename = filename.replace('.md', '.html')
             output_path = os.path.join(output_dir, html_filename)
             
-            html_content = generate_html_post(frontmatter, body_html, html_filename)
-            
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(html_content)
-            
             excerpt = body.split('\n')[0] if body else ''
             excerpt = re.sub(r'<[^>]+>', '', excerpt)
             excerpt = excerpt[:150] + '...' if len(excerpt) > 150 else excerpt
@@ -354,12 +420,42 @@ def main():
                 'excerpt': excerpt,
                 'tags': tags
             })
+    
+    # 生成文章数据 JSON
+    import json
+    posts_json = json.dumps(posts, ensure_ascii=False)
+    
+    # 生成每篇文章的 HTML
+    for filename in os.listdir(posts_dir):
+        if filename.endswith('.md'):
+            filepath = os.path.join(posts_dir, filename)
+            
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            frontmatter, body = parse_frontmatter(content)
+            body_html = markdown_to_html(body)
+            
+            html_filename = filename.replace('.md', '.html')
+            output_path = os.path.join(output_dir, html_filename)
+            
+            html_content = generate_html_post(frontmatter, body_html, html_filename, posts_json)
+            
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(html_content)
             
             print(f"已生成：{output_path}")
     
-    update_index_html(posts)
+    # 生成 RSS feed
+    generate_rss_feed(posts)
+    
+    # 更新首页
+    update_index_html(posts, posts_json)
+    print("已更新：index.html")
+    
+    # 生成标签页面
     generate_tag_pages(posts)
-    print(f"已更新：index.html")
+    
     print(f"总共生成 {len(posts)} 篇文章")
 
 if __name__ == '__main__':
