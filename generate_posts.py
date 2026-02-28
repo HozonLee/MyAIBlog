@@ -44,21 +44,18 @@ def markdown_to_html(markdown_text):
     
     html = re.sub(r'^(.+)$', r'<p>\1</p>', html, flags=re.MULTILINE)
     
-    html = re.sub(r'<p>(<h[1-6]>.*</h[1-6]>)</p>', r'\1', html)
-    html = re.sub(r'<p>(<ul>.*</ul>)</p>', r'\1', html)
-    html = re.sub(r'<p>(<pre>.*</pre>)</p>', r'\1', html)
-    html = re.sub(r'<p>(<li>.*</li>)</p>', r'\1', html)
+    html = re.sub(r'<p>(<h[1-6]>.*</h[1-6]>)?</p>', r'\1', html)
+    html = re.sub(r'<p>(<ul>.*</ul>)?</p>', r'\1', html)
+    html = re.sub(r'<p>(<pre>.*</pre>)?</p>', r'\1', html)
+    html = re.sub(r'<p>(<li>.*</li>)?</p>', r'\1', html)
     html = re.sub(r'<p></p>', '', html)
     
     return html
 
-def generate_html_post(frontmatter, body_html):
+def generate_html_post(frontmatter, body_html, filename):
     title = frontmatter.get('title', '未命名文章')
     date = frontmatter.get('date', datetime.now().strftime('%Y-%m-%d'))
     tags = frontmatter.get('tags', '')
-    
-    filename = title.replace(' ', '-').lower()
-    filename = re.sub(r'[^\w\-]', '', filename)
     
     html_template = f'''<!DOCTYPE html>
 <html lang="zh-CN">
@@ -163,13 +160,13 @@ def generate_html_post(frontmatter, body_html):
 </body>
 </html>'''
     
-    return html_template, filename
+    return html_template
 
 def update_index_html(posts):
     posts_html = ''
     for post in sorted(posts, key=lambda x: x['date'], reverse=True):
         posts_html += f'''                <li>
-                    <a href="posts/{post['filename']}.html">
+                    <a href="{post['url']}">
                         <h3>{post['title']}</h3>
                         <p class="date">{post['date']}</p>
                         <p>{post['excerpt']}</p>
@@ -240,9 +237,11 @@ def main():
             frontmatter, body = parse_frontmatter(content)
             body_html = markdown_to_html(body)
             
-            html_content, html_filename = generate_html_post(frontmatter, body_html)
+            html_filename = filename.replace('.md', '.html')
+            output_path = os.path.join(output_dir, html_filename)
             
-            output_path = os.path.join(output_dir, f'{html_filename}.html')
+            html_content = generate_html_post(frontmatter, body_html, html_filename)
+            
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(html_content)
             
@@ -253,7 +252,7 @@ def main():
             posts.append({
                 'title': frontmatter.get('title', '未命名文章'),
                 'date': frontmatter.get('date', datetime.now().strftime('%Y-%m-%d')),
-                'filename': html_filename,
+                'url': f'posts/{html_filename}',
                 'excerpt': excerpt
             })
             
