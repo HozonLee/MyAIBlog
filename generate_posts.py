@@ -103,6 +103,7 @@ def generate_html_post(frontmatter, body_html, filename):
             <script src="https://utteranc.es/client.js"
                 repo="HozonLee/MyAIBlog"
                 issue-term="pathname"
+                label="comment"
                 theme="github-light"
                 crossorigin="anonymous"
                 async>
