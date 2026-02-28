@@ -467,7 +467,17 @@ footer p {
 /* 深色模式样式 */
 html.dark-mode {
     background-color: #1a1a1a;
+}
+
+html.dark-mode body {
+    background-color: #1a1a1a;
     color: #e0e0e0;
+}
+
+html.dark-mode main,
+html.dark-mode section,
+html.dark-mode .post-content {
+    background-color: transparent;
 }
 
 html.dark-mode header h1 a {
@@ -772,3 +782,7 @@ html.dark-mode .code-string { color: #a5d6ff; }
 html.dark-mode .code-comment { color: #8b949e; }
 html.dark-mode .code-function { color: #d2a8ff; }
 html.dark-mode .code-number { color: #79c0ff; }
+
+html.dark-mode .post-content pre {
+    background-color: #2d2d2d;
+}
