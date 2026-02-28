@@ -57,6 +57,17 @@ def generate_html_post(frontmatter, body_html, filename):
     date = frontmatter.get('date', datetime.now().strftime('%Y-%m-%d'))
     tags = frontmatter.get('tags', '')
     
+    # 处理标签
+    tags_html = ''
+    if tags:
+        tag_list = tags.strip('[]').split(',')
+        tags_html = '<div class="tags">'
+        for tag in tag_list:
+            tag = tag.strip()
+            if tag:
+                tags_html += f'<span class="tag">{tag}</span>'
+        tags_html += '</div>'
+    
     html_template = f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -64,68 +75,6 @@ def generate_html_post(frontmatter, body_html, filename):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - 我的博客</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <style>
-        .post-content {{
-            line-height: 1.8;
-        }}
-        .post-content h1 {{
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #333;
-        }}
-        .post-content h2 {{
-            font-size: 24px;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            color: #333;
-        }}
-        .post-content h3 {{
-            font-size: 20px;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            color: #333;
-        }}
-        .post-content p {{
-            margin-bottom: 15px;
-        }}
-        .post-content ul {{
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }}
-        .post-content li {{
-            margin-bottom: 8px;
-        }}
-        .post-content pre {{
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            margin-bottom: 15px;
-        }}
-        .post-content code {{
-            font-family: 'Courier New', monospace;
-            background-color: #f5f5f5;
-            padding: 2px 5px;
-            border-radius: 3px;
-        }}
-        .post-content pre code {{
-            background-color: transparent;
-            padding: 0;
-        }}
-        .post-meta {{
-            color: #999;
-            margin-bottom: 20px;
-        }}
-        .back-link {{
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #666;
-            text-decoration: none;
-        }}
-        .back-link:hover {{
-            color: #000;
-        }}
-    </style>
 </head>
 <body>
     <header>
@@ -137,11 +86,11 @@ def generate_html_post(frontmatter, body_html, filename):
         </nav>
     </header>
     <main>
-        <section class="post">
+        <section class="post card">
             <a href="../index.html" class="back-link">← 返回首页</a>
             <div class="post-meta">
                 <p>发布日期：{date}</p>
-                <p>标签：{tags}</p>
+                {tags_html}
             </div>
             <div class="post-content">
                 {body_html}
@@ -165,10 +114,22 @@ def generate_html_post(frontmatter, body_html, filename):
 def update_index_html(posts):
     posts_html = ''
     for post in sorted(posts, key=lambda x: x['date'], reverse=True):
-        posts_html += f'''                <li>
+        # 处理标签
+        tags_html = ''
+        if 'tags' in post and post['tags']:
+            tag_list = post['tags'].strip('[]').split(',')
+            tags_html = '<div class="tags">'
+            for tag in tag_list:
+                tag = tag.strip()
+                if tag:
+                    tags_html += f'<span class="tag">{tag}</span>'
+            tags_html += '</div>'
+        
+        posts_html += f'''                <li class="card">
                     <a href="{post['url']}">
                         <h3>{post['title']}</h3>
                         <p class="date">{post['date']}</p>
+                        {tags_html}
                         <p>{post['excerpt']}</p>
                     </a>
                 </li>
@@ -192,6 +153,9 @@ def update_index_html(posts):
         </nav>
     </header>
     <main>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="搜索文章...">
+        </div>
         <section class="posts">
             <h2>最新文章</h2>
             <ul>
@@ -252,6 +216,7 @@ def main():
             posts.append({
                 'title': frontmatter.get('title', '未命名文章'),
                 'date': frontmatter.get('date', datetime.now().strftime('%Y-%m-%d')),
+                'tags': frontmatter.get('tags', ''),
                 'url': f'posts/{html_filename}',
                 'excerpt': excerpt
             })
