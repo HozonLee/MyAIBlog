@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const html = document.documentElement;
     
     if (themeToggle) {
-        // 更新按钮图标
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             themeToggle.textContent = '☀️';
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
             themeToggle.textContent = '🌙';
         }
         
-        // 切换主题
         themeToggle.addEventListener('click', function() {
             html.classList.toggle('dark-mode');
             
@@ -123,4 +121,167 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+    
+    // 生成文章目录（TOC）
+    generateTOC();
+    
+    // 代码高亮和复制功能
+    enhanceCodeBlocks();
+    
+    // 阅读进度条
+    initReadingProgress();
 });
+
+// 生成文章目录
+function generateTOC() {
+    const postContent = document.querySelector('.post-content');
+    if (!postContent) return;
+    
+    const headings = postContent.querySelectorAll('h2, h3');
+    if (headings.length < 2) return; // 如果标题太少，不生成目录
+    
+    // 为每个标题添加锚点
+    headings.forEach((heading, index) => {
+        const id = 'heading-' + index;
+        heading.id = id;
+    });
+    
+    // 生成目录 HTML
+    let tocHTML = '<div class="toc"><h3>📑 目录</h3><ul>';
+    
+    headings.forEach((heading, index) => {
+        const level = heading.tagName.toLowerCase();
+        const text = heading.textContent;
+        const id = 'heading-' + index;
+        
+        tocHTML += `<li class="toc-${level}"><a href="#${id}">${text}</a></li>`;
+    });
+    
+    tocHTML += '</ul></div>';
+    
+    // 插入到文章开头
+    postContent.insertAdjacentHTML('afterbegin', tocHTML);
+}
+
+// 代码高亮和复制功能
+function enhanceCodeBlocks() {
+    const codeBlocks = document.querySelectorAll('.post-content pre code');
+    
+    codeBlocks.forEach((codeBlock, index) => {
+        const pre = codeBlock.parentElement;
+        const code = codeBlock.textContent;
+        
+        // 检测语言
+        const lang = detectLanguage(code);
+        
+        // 高亮代码
+        const highlightedCode = highlightCode(code, lang);
+        codeBlock.innerHTML = highlightedCode;
+        
+        // 包装代码块
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        
+        // 添加代码头部
+        const header = document.createElement('div');
+        header.className = 'code-header';
+        header.innerHTML = `
+            <span class="code-lang">${lang || 'code'}</span>
+            <button class="copy-btn" data-index="${index}">复制</button>
+        `;
+        wrapper.insertBefore(header, pre);
+        
+        // 绑定复制事件
+        const copyBtn = header.querySelector('.copy-btn');
+        copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(code).then(() => {
+                copyBtn.textContent = '已复制!';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.textContent = '复制';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败:', err);
+            });
+        });
+    });
+}
+
+// 检测代码语言
+function detectLanguage(code) {
+    // 简单的语言检测
+    if (code.includes('def ') || code.includes('import ') && code.includes(':')) {
+        return 'python';
+    }
+    if (code.includes('function') || code.includes('const ') || code.includes('let ')) {
+        return 'javascript';
+    }
+    if (code.includes('<') && code.includes('>')) {
+        return 'html';
+    }
+    if (code.includes('{') && code.includes('}') && code.includes(':')) {
+        return 'json';
+    }
+    if (code.includes('$') || code.includes('npm') || code.includes('git')) {
+        return 'bash';
+    }
+    return '';
+}
+
+// 简单的代码高亮
+function highlightCode(code, lang) {
+    // 转义 HTML
+    let highlighted = code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    
+    // 高亮注释
+    highlighted = highlighted.replace(/(\/\/.*$|#.*$)/gm, '<span class="code-comment">$1</span>');
+    
+    // 高亮字符串
+    highlighted = highlighted.replace(/(".*?"|'.*?'|`.*?`)/g, '<span class="code-string">$1</span>');
+    
+    // 高亮关键字
+    const keywords = ['function', 'const', 'let', 'var', 'if', 'else', 'for', 'while', 'return', 'class', 'import', 'from', 'def', 'print', 'True', 'False', 'None'];
+    const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
+    highlighted = highlighted.replace(keywordRegex, '<span class="code-keyword">$1</span>');
+    
+    // 高亮函数调用
+    highlighted = highlighted.replace(/(\w+)(?=\()/g, '<span class="code-function">$1</span>');
+    
+    // 高亮数字
+    highlighted = highlighted.replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>');
+    
+    return highlighted;
+}
+
+// 阅读进度条
+function initReadingProgress() {
+    // 创建进度条元素
+    const progressBar = document.createElement('div');
+    progressBar.className = 'reading-progress';
+    progressBar.id = 'reading-progress';
+    document.body.appendChild(progressBar);
+    
+    // 获取文章区域
+    const article = document.querySelector('.post-content') || document.querySelector('main');
+    if (!article) return;
+    
+    // 监听滚动
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset;
+        const docHeight = article.offsetHeight;
+        const winHeight = window.innerHeight;
+        
+        // 计算阅读进度
+        let progress = (scrollTop / (docHeight - winHeight)) * 100;
+        progress = Math.min(100, Math.max(0, progress));
+        
+        progressBar.style.width = progress + '%';
+    });
+}

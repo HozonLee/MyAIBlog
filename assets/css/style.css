@@ -608,3 +608,167 @@ html {
     background-color: #e8f4f8;
     color: #333;
 }
+
+/* 阅读进度条 */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, #0066cc, #00a8ff);
+    z-index: 10000;
+    transition: width 0.1s ease;
+}
+
+/* 文章目录样式 */
+.toc {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin: 30px 0;
+    border-left: 4px solid #0066cc;
+}
+
+.toc h3 {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.toc li {
+    margin-bottom: 8px;
+}
+
+.toc a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.toc a:hover {
+    color: #0066cc;
+}
+
+.toc .toc-h2 {
+    padding-left: 0;
+}
+
+.toc .toc-h3 {
+    padding-left: 20px;
+}
+
+/* 代码块样式优化 */
+.code-block {
+    position: relative;
+    margin: 25px 0;
+}
+
+.code-block pre {
+    margin: 0;
+    padding-top: 45px;
+}
+
+.code-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: #e9ecef;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.code-lang {
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.copy-btn {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background-color: #fff;
+    border-color: #999;
+}
+
+.copy-btn.copied {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+}
+
+/* 代码高亮 */
+.post-content pre code {
+    display: block;
+    color: #333;
+}
+
+/* 关键字高亮 */
+.code-keyword { color: #d73a49; font-weight: bold; }
+.code-string { color: #032f62; }
+.code-comment { color: #6a737d; font-style: italic; }
+.code-function { color: #6f42c1; }
+.code-number { color: #005cc5; }
+
+/* 深色模式下的代码高亮 */
+html.dark-mode .code-header {
+    background-color: #3d3d3d;
+}
+
+html.dark-mode .code-lang {
+    color: #999;
+}
+
+html.dark-mode .copy-btn {
+    border-color: #555;
+    color: #999;
+}
+
+html.dark-mode .copy-btn:hover {
+    background-color: #444;
+    border-color: #666;
+}
+
+html.dark-mode .toc {
+    background-color: #2d2d2d;
+    border-left-color: #66b3ff;
+}
+
+html.dark-mode .toc h3 {
+    color: #e0e0e0;
+}
+
+html.dark-mode .toc a {
+    color: #999;
+}
+
+html.dark-mode .toc a:hover {
+    color: #66b3ff;
+}
+
+html.dark-mode .code-keyword { color: #ff7b72; }
+html.dark-mode .code-string { color: #a5d6ff; }
+html.dark-mode .code-comment { color: #8b949e; }
+html.dark-mode .code-function { color: #d2a8ff; }
+html.dark-mode .code-number { color: #79c0ff; }
