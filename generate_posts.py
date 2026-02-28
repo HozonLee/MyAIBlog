@@ -103,7 +103,7 @@ def generate_html_post(frontmatter, body_html, filename):
             <script src="https://giscus.app/client.js"
                 data-repo="HozonLee/MyAIBlog"
                 data-repo-id="R_kgDON4J8CA"
-                data-category="Announcements"
+                data-category="General"
                 data-category-id="DIC_kwDON4J8CM4CnJRh"
                 data-mapping="pathname"
                 data-strict="0"
