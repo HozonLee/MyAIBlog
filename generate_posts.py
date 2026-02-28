@@ -132,7 +132,7 @@ def generate_html_post(frontmatter, body_html, filename, posts_json):
     <script id="posts-data" type="application/json">{posts_json}</script>
     <script src="../assets/js/main.js"></script>
     <!-- Umami 网站统计 -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="91404383-bdec-43de-9eb4-32d927053f11"></script>
     
     <button id="back-to-top" class="theme-toggle" style="bottom: 20px; top: auto; display: none;" title="返回顶部">↑</button>
 </body>
@@ -244,7 +244,7 @@ def generate_tag_pages(posts):
     
     <script src="../assets/js/main.js"></script>
     <!-- Umami 网站统计 -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="91404383-bdec-43de-9eb4-32d927053f11"></script>
 </body>
 </html>'''
         
@@ -308,7 +308,7 @@ def generate_tag_pages(posts):
     
     <script src="../assets/js/main.js"></script>
     <!-- Umami 网站统计 -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="91404383-bdec-43de-9eb4-32d927053f11"></script>
 </body>
 </html>'''
     
@@ -381,7 +381,7 @@ def update_index_html(posts, posts_json):
     <script id="posts-data" type="application/json">{posts_json}</script>
     <script src="assets/js/main.js"></script>
     <!-- Umami 网站统计 -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="91404383-bdec-43de-9eb4-32d927053f11"></script>
 </body>
 </html>'''
     
