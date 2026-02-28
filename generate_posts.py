@@ -98,20 +98,12 @@ def generate_html_post(frontmatter, body_html, filename):
             </div>
         </section>
         
-        <!-- Giscus 评论系统 -->
+        <!-- Utterances 评论系统 -->
         <section class="comments">
-            <script src="https://giscus.app/client.js"
-                data-repo="HozonLee/MyAIBlog"
-                data-repo-id="R_kgDON4J8CA"
-                data-category="General"
-                data-category-id="DIC_kwDORayS8c4C3YcF"
-                data-mapping="title"
-                data-strict="0"
-                data-reactions-enabled="1"
-                data-emit-metadata="0"
-                data-input-position="bottom"
-                data-theme="preferred_color_scheme"
-                data-lang="zh-CN"
+            <script src="https://utteranc.es/client.js"
+                repo="HozonLee/MyAIBlog"
+                issue-term="pathname"
+                theme="github-light"
                 crossorigin="anonymous"
                 async>
             </script>
