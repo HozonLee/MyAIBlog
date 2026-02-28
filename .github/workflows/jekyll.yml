@@ -31,12 +31,22 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4
       
-      - name: Build with Jekyll
+      - name: Install dependencies
         run: |
-          gem install jekyll
-          jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+          gem install bundler
+          bundle install
+          bundle exec jekyll --version
         env:
           JEKYLL_ENV: production
+      
+      - name: Build with Jekyll
+        run: |
+          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}" --verbose
+        env:
+          JEKYLL_ENV: production
+      
+      - name: List built files
+        run: ls -la _site
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
