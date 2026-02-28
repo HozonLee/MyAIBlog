@@ -105,7 +105,7 @@ def generate_html_post(frontmatter, body_html, filename):
                 data-repo-id="R_kgDON4J8CA"
                 data-category="General"
                 data-category-id="DIC_kwDORayS8c4C3YcF"
-                data-mapping="pathname"
+                data-mapping="url"
                 data-strict="0"
                 data-reactions-enabled="1"
                 data-emit-metadata="0"
