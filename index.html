@@ -1,42 +1,17 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的博客</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <header>
-        <h1><a href="/">我的博客</a></h1>
-        <nav>
-            <a href="index.html">首页</a>
-            <a href="weekly/index.html">潮流周刊</a>
-            <a href="about/index.html">关于</a>
-        </nav>
-    </header>
-    <main>
-        <section class="posts">
-            <h2>最新文章</h2>
-            <ul>
-                <li>
-                    <a href="posts/openclaw-deployment.html">
-                        <h3>在MacBook Pro上本地部署OpenClaw并使用DeepSeek</h3>
-                        <p class="date">2026-02-28</p>
-                        <p>OpenClaw是一个开源的大模型部署工具，它允许用户在本地环境中运行和部署各种大语言模型，包括DeepSeek。</p>
-                    </a>
-                </li>
-            </ul>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 我的博客</p>
-        <div class="social-links">
-            <a href="https://github.com/HozonLee">GitHub</a>
-            <a href="https://twitter.com/yourusername">Twitter</a>
-            <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
-            <a href="mailto:your.email@example.com">Email</a>
-        </div>
-    </footer>
-</body>
-</html>
+---
+layout: default
+---
+<section class="posts">
+    <h2>最新文章</h2>
+    <ul>
+        {% for post in site.posts %}
+        <li>
+            <a href="{{ post.url }}">
+                <h3>{{ post.title }}</h3>
+                <p class="date">{{ post.date | date: "%Y-%m-%d" }}</p>
+                <p>{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>

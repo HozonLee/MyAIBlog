@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+    {% if page.custom_css %}
+    <style>
+        {{ page.custom_css }}
+    </style>
+    {% endif %}
+</head>
+<body>
+    <header>
+        <h1><a href="{{ site.baseurl }}/">我的博客</a></h1>
+        <nav>
+            <a href="{{ site.baseurl }}/">首页</a>
+            <a href="{{ site.baseurl }}/weekly/">潮流周刊</a>
+            <a href="{{ site.baseurl }}/about/">关于</a>
+        </nav>
+    </header>
+    <main>
+        {{ content }}
+    </main>
+    <footer>
+        <p>&copy; 2026 我的博客</p>
+        <div class="social-links">
+            <a href="https://github.com/HozonLee">GitHub</a>
+            <a href="https://twitter.com/yourusername">Twitter</a>
+            <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
+            <a href="mailto:your.email@example.com">Email</a>
+        </div>
+    </footer>
+</body>
+</html>

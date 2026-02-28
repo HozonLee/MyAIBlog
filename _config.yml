@@ -1,0 +1,21 @@
+title: 我的博客
+author: HozonLee
+description: 沪漂程序员的技术博客
+baseurl: /MyAIBlog
+url: https://hozonlee.github.io
+
+markdown: kramdown
+highlighter: rouge
+
+permalink: /:categories/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
