@@ -243,18 +243,10 @@ def generate_tag_pages(posts):
 def update_index_html(posts):
     posts_html = ''
     for post in sorted(posts, key=lambda x: x['date'], reverse=True):
-        tags_html = ''
-        if 'tags' in post and post['tags']:
-            tags_html = '<div class="tags">'
-            for tag in post['tags']:
-                tags_html += f'<a href="tags/{tag}.html" class="tag">{tag}</a>'
-            tags_html += '</div>'
-        
         posts_html += f'''                <li>
                     <a href="{post['url']}">
                         <h3>{post['title']}</h3>
                         <p class="date">【{post['date']}】</p>
-                        {tags_html}
                         <p>{post['excerpt']}</p>
                     </a>
                 </li>
