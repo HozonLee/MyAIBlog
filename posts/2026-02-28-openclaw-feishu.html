@@ -9,6 +9,7 @@
 <body>
     <header>
         <h1><a href="../index.html">我的博客</a></h1>
+        <p class="tagline">Be yourself and don't go with the flow.</p>
         <nav>
             <a href="../index.html">首页</a>
             <a href="../weekly/index.html">潮流周刊</a>
@@ -16,10 +17,10 @@
         </nav>
     </header>
     <main>
-        <section class="post card">
+        <section class="post">
             <a href="../index.html" class="back-link">← 返回首页</a>
             <div class="post-meta">
-                <p>发布日期：2026-02-28</p>
+                <p>【2026-02-28】</p>
                 <div class="tags"><span class="tag">OpenClaw</span><span class="tag">飞书</span><span class="tag">集成</span><span class="tag">AI助手</span></div>
             </div>
             <div class="post-content">
@@ -344,15 +345,27 @@
 <p></ul><li><a href="https://flask.palletsprojects.com/">Flask官方文档</a></li></p>
             </div>
         </section>
+        
+        <!-- 评论系统 -->
+        <section class="comments">
+            <h3>评论</h3>
+            <script src="https://utteranc.es/client.js"
+                repo="HozonLee/MyAIBlog"
+                issue-term="pathname"
+                theme="github-light"
+                crossorigin="anonymous"
+                async>
+            </script>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2026 我的博客</p>
         <div class="social-links">
             <a href="https://github.com/HozonLee">GitHub</a>
             <a href="https://twitter.com/yourusername">Twitter</a>
             <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
             <a href="mailto:your.email@example.com">Email</a>
         </div>
+        <p>&copy; 2026 我的博客</p>
     </footer>
 </body>
 </html>

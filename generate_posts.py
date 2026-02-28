@@ -79,6 +79,7 @@ def generate_html_post(frontmatter, body_html, filename):
 <body>
     <header>
         <h1><a href="../index.html">我的博客</a></h1>
+        <p class="tagline">Be yourself and don't go with the flow.</p>
         <nav>
             <a href="../index.html">首页</a>
             <a href="../weekly/index.html">潮流周刊</a>
@@ -86,25 +87,37 @@ def generate_html_post(frontmatter, body_html, filename):
         </nav>
     </header>
     <main>
-        <section class="post card">
+        <section class="post">
             <a href="../index.html" class="back-link">← 返回首页</a>
             <div class="post-meta">
-                <p>发布日期：{date}</p>
+                <p>【{date}】</p>
                 {tags_html}
             </div>
             <div class="post-content">
                 {body_html}
             </div>
         </section>
+        
+        <!-- 评论系统 -->
+        <section class="comments">
+            <h3>评论</h3>
+            <script src="https://utteranc.es/client.js"
+                repo="HozonLee/MyAIBlog"
+                issue-term="pathname"
+                theme="github-light"
+                crossorigin="anonymous"
+                async>
+            </script>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2026 我的博客</p>
         <div class="social-links">
             <a href="https://github.com/HozonLee">GitHub</a>
             <a href="https://twitter.com/yourusername">Twitter</a>
             <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
             <a href="mailto:your.email@example.com">Email</a>
         </div>
+        <p>&copy; 2026 我的博客</p>
     </footer>
 </body>
 </html>'''
@@ -114,22 +127,10 @@ def generate_html_post(frontmatter, body_html, filename):
 def update_index_html(posts):
     posts_html = ''
     for post in sorted(posts, key=lambda x: x['date'], reverse=True):
-        # 处理标签
-        tags_html = ''
-        if 'tags' in post and post['tags']:
-            tag_list = post['tags'].strip('[]').split(',')
-            tags_html = '<div class="tags">'
-            for tag in tag_list:
-                tag = tag.strip()
-                if tag:
-                    tags_html += f'<span class="tag">{tag}</span>'
-            tags_html += '</div>'
-        
-        posts_html += f'''                <li class="card">
+        posts_html += f'''                <li>
                     <a href="{post['url']}">
                         <h3>{post['title']}</h3>
-                        <p class="date">{post['date']}</p>
-                        {tags_html}
+                        <p class="date">【{post['date']}】</p>
                         <p>{post['excerpt']}</p>
                     </a>
                 </li>
@@ -146,6 +147,7 @@ def update_index_html(posts):
 <body>
     <header>
         <h1><a href="index.html">我的博客</a></h1>
+        <p class="tagline">Be yourself and don't go with the flow.</p>
         <nav>
             <a href="index.html">首页</a>
             <a href="weekly/index.html">潮流周刊</a>
@@ -153,24 +155,20 @@ def update_index_html(posts):
         </nav>
     </header>
     <main>
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="搜索文章...">
-        </div>
         <section class="posts">
-            <h2>最新文章</h2>
             <ul>
 {posts_html}
             </ul>
         </section>
     </main>
     <footer>
-        <p>&copy; 2026 我的博客</p>
         <div class="social-links">
             <a href="https://github.com/HozonLee">GitHub</a>
             <a href="https://twitter.com/yourusername">Twitter</a>
             <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
             <a href="mailto:your.email@example.com">Email</a>
         </div>
+        <p>&copy; 2026 我的博客</p>
     </footer>
 </body>
 </html>'''
@@ -211,12 +209,11 @@ def main():
             
             excerpt = body.split('\n')[0] if body else ''
             excerpt = re.sub(r'<[^>]+>', '', excerpt)
-            excerpt = excerpt[:100] + '...' if len(excerpt) > 100 else excerpt
+            excerpt = excerpt[:150] + '...' if len(excerpt) > 150 else excerpt
             
             posts.append({
                 'title': frontmatter.get('title', '未命名文章'),
                 'date': frontmatter.get('date', datetime.now().strftime('%Y-%m-%d')),
-                'tags': frontmatter.get('tags', ''),
                 'url': f'posts/{html_filename}',
                 'excerpt': excerpt
             })
