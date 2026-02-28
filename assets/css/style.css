@@ -22,59 +22,86 @@ html.dark-mode body {
 
 /* 头部样式 */
 header {
-    padding: 80px 0 40px;
+    padding: 100px 0 50px;
     text-align: center;
+    animation: fadeInDown 0.6s ease;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 header h1 {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
 }
 
 header h1 a {
     text-decoration: none;
     color: #333;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 header h1 a:hover {
-    opacity: 0.7;
+    transform: scale(1.05);
+    filter: brightness(1.1);
 }
 
 .tagline {
-    font-size: 0.95rem;
-    color: #999;
-    margin-bottom: 30px;
-    font-style: italic;
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 35px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
 }
 
 nav {
-    margin-top: 20px;
+    margin-top: 25px;
+    padding: 15px 0;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 nav a {
     display: inline-block;
-    margin: 0 15px;
+    margin: 0 20px;
     text-decoration: none;
     color: #666;
     font-size: 0.95rem;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
 }
 
 nav a:hover {
-    color: #333;
+    color: #667eea;
+    background-color: rgba(102, 126, 234, 0.05);
+    transform: translateY(-2px);
 }
 
 /* 主要内容样式 */
 main {
     min-height: 50vh;
-    padding: 20px 0;
+    padding: 30px 0;
 }
 
 /* 文章列表样式 */
 .posts {
-    margin-bottom: 60px;
+    margin-bottom: 80px;
 }
 
 .posts ul {
@@ -82,13 +109,22 @@ main {
 }
 
 .posts li {
-    margin-bottom: 50px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 60px;
+    padding: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #e8e8e8;
+}
+
+.posts li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
 .posts li:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
 }
 
 .posts a {
@@ -98,10 +134,10 @@ main {
 }
 
 .posts h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #333;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #222;
     line-height: 1.4;
 }
 
@@ -109,37 +145,50 @@ main {
     font-size: 0.85rem;
     color: #999;
     margin-bottom: 15px;
+    font-weight: 500;
 }
 
 .posts p {
-    color: #666;
+    color: #555;
     line-height: 1.7;
     font-size: 0.95rem;
 }
 
 /* 文章页面样式 */
 .post {
-    max-width: 680px;
+    max-width: 700px;
     margin: 0 auto;
+    padding: 40px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .back-link {
-    display: inline-block;
-    margin-bottom: 40px;
-    color: #999;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 30px;
+    color: #667eea;
     text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: rgba(102, 126, 234, 0.05);
 }
 
 .back-link:hover {
-    color: #333;
+    background-color: rgba(102, 126, 234, 0.1);
+    transform: translateX(-5px);
 }
 
 .post-meta {
-    color: #999;
-    margin-bottom: 40px;
+    color: #888;
+    margin-bottom: 35px;
     font-size: 0.9rem;
+    padding: 15px 0;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .post-meta p {
@@ -404,38 +453,45 @@ footer p {
 
 /* 搜索框样式 */
 .search-container {
-    margin: 30px 0;
+    margin: 40px 0;
     text-align: center;
 }
 
 .search-box {
     width: 100%;
-    max-width: 400px;
-    padding: 12px 20px;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    font-size: 0.95rem;
+    max-width: 450px;
+    padding: 16px 24px;
+    border: 2px solid #e8e8e8;
+    border-radius: 30px;
+    font-size: 1rem;
     outline: none;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .search-box:focus {
-    border-color: #999;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-color: #667eea;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
 }
 
 .search-results {
-    margin-top: 20px;
+    margin-top: 25px;
     text-align: left;
 }
 
 .search-result-item {
-    padding: 15px 0;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    margin-bottom: 15px;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
-.search-result-item:last-child {
-    border-bottom: none;
+.search-result-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .search-result-item a {
@@ -444,9 +500,10 @@ footer p {
 }
 
 .search-result-item h4 {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-    color: #333;
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    color: #222;
+    font-weight: 600;
 }
 
 .search-result-item p {
@@ -471,7 +528,15 @@ footer p {
 
 /* 深色模式样式 */
 html.dark-mode header h1 a {
-    color: #e0e0e0;
+    background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+html.dark-mode nav {
+    border-top-color: #333;
+    border-bottom-color: #333;
 }
 
 html.dark-mode nav a {
@@ -479,11 +544,18 @@ html.dark-mode nav a {
 }
 
 html.dark-mode nav a:hover {
-    color: #e0e0e0;
+    color: #a78bfa;
+    background-color: rgba(167, 139, 250, 0.1);
 }
 
 html.dark-mode .posts li {
-    border-bottom-color: #333;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border-color: #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+html.dark-mode .posts li:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 html.dark-mode .posts h3 {
@@ -492,6 +564,25 @@ html.dark-mode .posts h3 {
 
 html.dark-mode .posts p {
     color: #999;
+}
+
+html.dark-mode .post {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border-color: #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+html.dark-mode .back-link {
+    color: #a78bfa;
+    background-color: rgba(167, 139, 250, 0.1);
+}
+
+html.dark-mode .back-link:hover {
+    background-color: rgba(167, 139, 250, 0.2);
+}
+
+html.dark-mode .post-meta {
+    border-bottom-color: #333;
 }
 
 html.dark-mode .post-content {
@@ -506,6 +597,26 @@ html.dark-mode .post-content h3 {
 
 html.dark-mode .post-content a {
     color: #66b3ff;
+}
+
+html.dark-mode .search-box {
+    background-color: #2a2a2a;
+    border-color: #333;
+    color: #e0e0e0;
+}
+
+html.dark-mode .search-box:focus {
+    border-color: #a78bfa;
+    box-shadow: 0 4px 20px rgba(167, 139, 250, 0.3);
+}
+
+html.dark-mode .search-result-item {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border-color: #333;
+}
+
+html.dark-mode .search-result-item h4 {
+    color: #e0e0e0;
 }
 
 html.dark-mode .post-content a:hover {
