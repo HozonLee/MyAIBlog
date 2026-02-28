@@ -1,28 +1,3 @@
----
-title: OpenClaw模型切换工具：轻松切换不同大模型
-date: 2026-02-28
-tags: [OpenClaw, 大模型, 工具, 配置]
----
-
-# OpenClaw模型切换工具：轻松切换不同大模型
-
-## 背景
-
-OpenClaw是一个强大的本地AI助手网关，支持多种大模型。然而，切换不同的大模型通常需要手动编辑配置文件，这对于不熟悉配置的用户来说可能有些复杂。
-
-本文将介绍一个简单的Python工具，帮助你轻松切换OpenClaw使用的大模型，无需手动编辑配置文件。
-
-## 工具功能
-
-- 查看当前使用的模型
-- 列出所有可用的模型
-- 切换到指定的模型
-- 重启OpenClaw以应用更改
-- 显示模型切换状态
-
-## 实现代码
-
-```python
 #!/usr/bin/env python3
 """
 OpenClaw模型切换工具
@@ -141,7 +116,7 @@ def main():
     elif args.action == 'switch':
         if not args.model:
             print("错误：请指定要切换的模型名称")
-            print("使用 'openclaw-model list' 查看可用模型")
+            print("使用 'openclaw-model switch list' 查看可用模型")
             sys.exit(1)
         
         if switch_model(config, args.model):
@@ -153,86 +128,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-```
-
-## 使用方法
-
-### 1. 保存工具脚本
-
-将上面的代码保存为 `openclaw-model.py`，并添加执行权限：
-
-```bash
-chmod +x openclaw-model.py
-```
-
-### 2. 移动到系统路径
-
-将脚本移动到系统路径，方便全局使用：
-
-```bash
-sudo mv openclaw-model.py /usr/local/bin/openclaw-model
-```
-
-### 3. 查看当前模型
-
-```bash
-openclaw-model status
-```
-
-### 4. 列出可用模型
-
-```bash
-openclaw-model list
-```
-
-### 5. 切换模型
-
-```bash
-# 切换到DeepSeek模型
-openclaw-model switch deepseek
-
-# 切换到Qwen模型
-openclaw-model switch qwen
-
-# 切换到OpenAI模型
-openclaw-model switch openai
-```
-
-### 6. 重启OpenClaw
-
-```bash
-openclaw-model restart
-```
-
-## 支持的模型
-
-| 模型名称 | 提供商 | 模型ID |
-|---------|--------|--------|
-| deepseek | deepseek | deepseek-chat |
-| qwen | qwen | qwen-turbo |
-| minimax | minimax | abab5.5-chat |
-| openai | openai | gpt-4o |
-| anthropic | anthropic | claude-3-opus-20240229 |
-| google | google | gemini-1.5-flash |
-
-## 注意事项
-
-1. 确保OpenClaw已经安装并配置
-2. 切换模型后需要重启OpenClaw才能生效
-3. 部分模型可能需要API密钥，请确保在OpenClaw配置中正确设置
-4. 对于需要OAuth授权的模型（如Qwen），请使用 `openclaw configure` 命令进行授权
-
-## 扩展功能
-
-你可以根据需要扩展这个工具：
-
-1. 添加自定义模型配置
-2. 支持模型参数调整
-3. 实现模型性能测试
-4. 添加模型对比功能
-
-## 总结
-
-这个OpenClaw模型切换工具让你可以轻松管理和切换不同的大模型，无需手动编辑配置文件。通过简单的命令，你可以快速切换到最适合当前任务的模型，提高AI助手的使用效率。
-
-希望这个工具能帮助你更好地使用OpenClaw，享受AI助手带来的便利！
