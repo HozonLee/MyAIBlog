@@ -104,7 +104,7 @@ def generate_html_post(frontmatter, body_html, filename):
                 data-repo="HozonLee/MyAIBlog"
                 data-repo-id="R_kgDON4J8CA"
                 data-category="General"
-                data-category-id="DIC_kwDON4J8CM4CnJRh"
+                data-category-id="DIC_kwDORayS8c4C3YcF"
                 data-mapping="pathname"
                 data-strict="0"
                 data-reactions-enabled="1"
