@@ -457,27 +457,30 @@ footer p {
 
 /* 搜索框样式 */
 .search-container {
-    display: inline-block;
+    margin: 40px 0;
+    text-align: center;
     position: relative;
 }
 
 .search-box {
-    width: 180px;
-    padding: 8px 16px;
+    width: 100%;
+    max-width: 320px;
+    padding: 12px 20px;
     border: 1px solid #e8e8e8;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    border-radius: 24px;
+    font-size: 1rem;
     outline: none;
     transition: all 0.3s ease;
     background-color: #f8f9fa;
-    color: #666;
+    color: #333;
+    margin: 0 auto;
+    display: block;
 }
 
 .search-box:focus {
-    width: 250px;
     border-color: #667eea;
     background-color: #fff;
-    color: #333;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
 }
 
 .search-box::placeholder {
@@ -487,34 +490,28 @@ footer p {
 .search-results {
     position: absolute;
     top: 100%;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
-    min-width: 300px;
+    max-width: 320px;
     margin-top: 10px;
     text-align: left;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    max-height: 400px;
+    max-height: 300px;
     overflow-y: auto;
 }
 
 .search-result-item {
-    padding: 15px 20px;
-    border-radius: 0;
-    background: #fff;
-    margin-bottom: 0;
-    border: none;
+    padding: 12px 16px;
     border-bottom: 1px solid #f0f0f0;
-    box-shadow: none;
     transition: all 0.2s ease;
 }
 
 .search-result-item:hover {
-    transform: none;
     background-color: #f8f9fa;
-    box-shadow: none;
 }
 
 .search-result-item:last-child {
@@ -524,18 +521,21 @@ footer p {
 .search-result-item a {
     text-decoration: none;
     color: inherit;
+    display: block;
 }
 
 .search-result-item h4 {
-    font-size: 1.15rem;
-    margin-bottom: 8px;
-    color: #222;
-    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0 0 4px 0;
+    color: #333;
+    font-weight: 500;
 }
 
 .search-result-item p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #666;
+    margin: 0;
+    line-height: 1.4;
 }
 
 /* RSS 订阅链接 */
@@ -636,6 +636,7 @@ html.dark-mode .search-box:focus {
     border-color: #a78bfa;
     background-color: #333;
     color: #fff;
+    box-shadow: 0 2px 8px rgba(167, 139, 250, 0.2);
 }
 
 html.dark-mode .search-results {
@@ -654,6 +655,10 @@ html.dark-mode .search-result-item:hover {
 
 html.dark-mode .search-result-item h4 {
     color: #e0e0e0;
+}
+
+html.dark-mode .search-result-item p {
+    color: #999;
 }
 
 html.dark-mode .post-content a:hover {
