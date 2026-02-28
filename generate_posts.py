@@ -114,13 +114,147 @@ def generate_html_post(frontmatter, body_html, filename):
     
     return html_template
 
+def generate_tag_pages(posts):
+    tags_dir = 'tags'
+    if not os.path.exists(tags_dir):
+        os.makedirs(tags_dir)
+    
+    # 收集所有标签
+    all_tags = {}
+    for post in posts:
+        if 'tags' in post:
+            for tag in post['tags']:
+                if tag not in all_tags:
+                    all_tags[tag] = []
+                all_tags[tag].append(post)
+    
+    # 为每个标签生成页面
+    for tag, tag_posts in all_tags.items():
+        tag_posts_html = ''
+        for post in sorted(tag_posts, key=lambda x: x['date'], reverse=True):
+            tag_posts_html += f'''                <li>
+                    <a href="../{post['url']}">
+                        <h3>{post['title']}</h3>
+                        <p class="date">【{post['date']}】</p>
+                        <p>{post['excerpt']}</p>
+                    </a>
+                </li>
+'''
+        
+        tag_template = f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标签：{tag} - 我的博客</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="../index.html">我的博客</a></h1>
+        <p class="tagline">Be yourself and don't go with the flow.</p>
+        <nav>
+            <a href="../index.html">首页</a>
+            <a href="../weekly/index.html">潮流周刊</a>
+            <a href="../about/index.html">关于</a>
+            <a href="../tags/index.html">标签</a>
+        </nav>
+    </header>
+    <main>
+        <section class="posts">
+            <h2>标签：{tag}</h2>
+            <ul>
+{tag_posts_html}
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/HozonLee">GitHub</a>
+            <a href="https://twitter.com/yourusername">Twitter</a>
+            <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
+            <a href="mailto:your.email@example.com">Email</a>
+        </div>
+        <p>&copy; 2026 我的博客</p>
+    </footer>
+</body>
+</html>'''
+        
+        tag_file = os.path.join(tags_dir, f'{tag}.html')
+        with open(tag_file, 'w', encoding='utf-8') as f:
+            f.write(tag_template)
+        print(f"已生成：{tag_file}")
+    
+    # 生成标签索引页面
+    tags_index_html = ''
+    for tag, tag_posts in sorted(all_tags.items()):
+        tags_index_html += f'''                <li>
+                    <a href="{tag}.html">
+                        <span>{tag}</span>
+                        <span class="tag-count">({len(tag_posts)})</span>
+                    </a>
+                </li>
+'''
+    
+    tags_index_template = f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标签 - 我的博客</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="../index.html">我的博客</a></h1>
+        <p class="tagline">Be yourself and don't go with the flow.</p>
+        <nav>
+            <a href="../index.html">首页</a>
+            <a href="../weekly/index.html">潮流周刊</a>
+            <a href="../about/index.html">关于</a>
+            <a href="index.html">标签</a>
+        </nav>
+    </header>
+    <main>
+        <section class="posts">
+            <h2>标签</h2>
+            <ul>
+{tags_index_html}
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/HozonLee">GitHub</a>
+            <a href="https://twitter.com/yourusername">Twitter</a>
+            <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
+            <a href="mailto:your.email@example.com">Email</a>
+        </div>
+        <p>&copy; 2026 我的博客</p>
+    </footer>
+</body>
+</html>'''
+    
+    tags_index_file = os.path.join(tags_dir, 'index.html')
+    with open(tags_index_file, 'w', encoding='utf-8') as f:
+        f.write(tags_index_template)
+    print(f"已生成：{tags_index_file}")
+
 def update_index_html(posts):
     posts_html = ''
     for post in sorted(posts, key=lambda x: x['date'], reverse=True):
+        tags_html = ''
+        if 'tags' in post and post['tags']:
+            tags_html = '<div class="tags">'
+            for tag in post['tags']:
+                tags_html += f'<a href="tags/{tag}.html" class="tag">{tag}</a>'
+            tags_html += '</div>'
+        
         posts_html += f'''                <li>
                     <a href="{post['url']}">
                         <h3>{post['title']}</h3>
                         <p class="date">【{post['date']}】</p>
+                        {tags_html}
                         <p>{post['excerpt']}</p>
                     </a>
                 </li>
@@ -142,6 +276,7 @@ def update_index_html(posts):
             <a href="index.html">首页</a>
             <a href="weekly/index.html">潮流周刊</a>
             <a href="about/index.html">关于</a>
+            <a href="tags/index.html">标签</a>
         </nav>
     </header>
     <main>
@@ -201,16 +336,27 @@ def main():
             excerpt = re.sub(r'<[^>]+>', '', excerpt)
             excerpt = excerpt[:150] + '...' if len(excerpt) > 150 else excerpt
             
+            # 处理标签
+            tags = []
+            if 'tags' in frontmatter and frontmatter['tags']:
+                tag_list = frontmatter['tags'].strip('[]').split(',')
+                for tag in tag_list:
+                    tag = tag.strip()
+                    if tag:
+                        tags.append(tag)
+            
             posts.append({
                 'title': frontmatter.get('title', '未命名文章'),
                 'date': frontmatter.get('date', datetime.now().strftime('%Y-%m-%d')),
                 'url': f'posts/{html_filename}',
-                'excerpt': excerpt
+                'excerpt': excerpt,
+                'tags': tags
             })
             
             print(f"已生成：{output_path}")
     
     update_index_html(posts)
+    generate_tag_pages(posts)
     print(f"已更新：index.html")
     print(f"总共生成 {len(posts)} 篇文章")
 

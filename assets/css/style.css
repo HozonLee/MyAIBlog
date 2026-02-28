@@ -348,6 +348,19 @@ footer p {
     color: #666;
     margin-right: 8px;
     margin-bottom: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    background-color: #e8f4f8;
+    color: #333;
+}
+
+.tag-count {
+    font-size: 0.7rem;
+    color: #999;
+    margin-left: 5px;
 }
 
 /* 评论系统样式 */
