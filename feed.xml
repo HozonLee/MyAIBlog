@@ -5,8 +5,15 @@
     <link>https://hozonlee.github.io/MyAIBlog</link>
     <description>分享留学、语言、AI、工作、海外生活的个人博客</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 28 Feb 2026 15:28:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2026 18:57:38 +0000</lastBuildDate>
     <atom:link href="https://hozonlee.github.io/MyAIBlog/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>程序员面对AI飞速发展的思考与应对</title>
+      <link>https://hozonlee.github.io/MyAIBlog/posts/2026-03-01-ai-for-programmers.html</link>
+      <guid>https://hozonlee.github.io/MyAIBlog/posts/2026-03-01-ai-for-programmers.html</guid>
+      <pubDate>Sun, 01 Mar 2026 00:00:00 +0000</pubDate>
+      <description># 程序员面对AI飞速发展的思考与应对</description>
+    </item>
     <item>
       <title>OpenClaw对接飞书：打造智能AI助手</title>
       <link>https://hozonlee.github.io/MyAIBlog/posts/2026-02-28-openclaw-feishu.html</link>
